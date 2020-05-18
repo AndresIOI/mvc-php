@@ -1,25 +1,29 @@
 <?php
 
-require_once 'controllers/errores.php';
+namespace MVC\Libs;
 
-class App {
-    function __construct(){
+use MVC\Controllers\Errores;
+use MVC\Controllers\Index;
+
+class App
+{
+    function __construct()
+    {
         // Leer url
         $url = isset($_GET['url']) ? $_GET['url'] : null;
-        $url = rtrim($url,'/');
+        $url = rtrim($url, '/');
         $url = explode('/', $url);
 
-        if(empty($url[0])){
-            $archivoControlador = 'controllers/index.php';
-            require $archivoControlador;
+        if (empty($url[0])) {
+
             $controlador = new Index();
             $controlador->render();
             return false;
         } else {
-            $archivoControlador = 'controllers/'.$url[0].'.php';
+            $archivoControlador = 'Controllers/' . $url[0] . '.php';
         }
 
-        if(file_exists($archivoControlador)){
+        if (file_exists($archivoControlador)) {
             require $archivoControlador;
 
             $controlador = new $url[0];
@@ -29,11 +33,11 @@ class App {
             $nparams = sizeof($url);
 
             // comprueba si hay un metodo
-            if($nparams > 1){
+            if ($nparams > 1) {
                 //comprueba si tiene parametros
-                if($nparams > 2){
+                if ($nparams > 2) {
                     $params = array();
-                    for ($i=2; $i < $nparams ; $i++) { 
+                    for ($i = 2; $i < $nparams; $i++) {
                         array_push($params, $url[$i]);
                     }
                     $controlador->{$url[1]}($params);

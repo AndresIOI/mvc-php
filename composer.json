@@ -1,0 +1,8 @@
+{
+    "name" : "MVC-PHP",
+    "autoload": {
+        "psr-4": {
+            "MVC\\" : "MVC/"
+        }
+    }
+}
